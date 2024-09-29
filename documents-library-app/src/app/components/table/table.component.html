@@ -1,1 +1,36 @@
-<p>table works!</p>
+<div>
+    <button (click)="changeLang('en')">{{'languages.en' | translate}}</button>
+    <button (click)="changeLang('es')">{{'languages.es' | translate}}</button>
+    <p-table [value]="documents"  selectionMode="multiple"
+    dataKey="id" [rows]="20" styleClass="p-datatable-striped" sortMode="multiple">
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th></th>
+                <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
+                <th>Etiqueta</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Id</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-document let-i="rowIndex">
+            <tr [pSelectableRow]="document" [pSelectableRowIndex]="i">
+                <td>
+                    <p-tableCheckbox [value]="document" />
+                </td>
+                <td>
+                    <p-button type="button" pRipple [pRowToggler]="document" [text]="true" [rounded]="true" [plain]="true"  />
+                </td>
+                <td>{{ document.name }}</td>
+                <td>{{ document.label }}</td>
+                <td>{{ document.status }}</td>
+                <td>{{ document.createdAt }}</td>
+                <td>{{ document.favourite }}</td>
+                <td></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
