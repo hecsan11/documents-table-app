@@ -1,0 +1,44 @@
+.adjust-table-right {
+    margin: 3rem 0rem 0rem 1rem;
+}
+
+.adjust-table-header-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pt-1 {
+    padding-top: 1.25rem;
+}
+
+.mr-1 {
+    margin-right: 1.5rem;
+}
+
+.adjust-icon {
+    color: red;
+    position: relative;
+    font-size: 9rem;
+    left: 2rem;
+}
+
+.adjust-tabmenu {
+    padding-top: 3.25rem;
+    width: 20%;
+}
+
+.d-inline-flex {
+    display: inline-flex;
+}
+
+.adjust-th {
+    width: 35%;
+}
+
+.m-1 {
+    margin: 1rem;
+}
+
+.content-image {
+    background-image: url('./../../../assets/images/keyboard.jpg');
+}

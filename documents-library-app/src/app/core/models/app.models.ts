@@ -1,5 +1,10 @@
 export interface Document {
-    description: string;
+    id?: number;
+    name?: string;
+    description?: string;
+    label?: string;
     status: string;
-    id: number;
+    createdAt?: string,
+    favourite?: boolean
+    details?: Object,
 }

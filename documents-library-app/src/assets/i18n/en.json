@@ -1,6 +1,25 @@
 {
+    "header": {
+        "title": "Test front-end developer",
+        "permissions": "Enable see permissions"
+    },
     "languages": {
       "es": "Spanish",
       "en": "English"
+    },
+    "tableHeader": {
+        "name": "Name",
+        "label": "Label",
+        "status": "Status",
+        "createdAt": "Date",
+        "id": "Id"
+    },
+    "documentDetails": {
+        "description": "Nombre del documento",
+        "template": "Plantilla",
+        "constraints": "Restricciones del documento",
+        "evaluation": "Evaluación de la fuente",
+        "createdAt": "Fecha de creación",
+        "labels": "Etiquetas varias"
     }
 }

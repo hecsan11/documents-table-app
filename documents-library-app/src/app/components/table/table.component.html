@@ -1,36 +1,175 @@
-<div>
-    <button (click)="changeLang('en')">{{'languages.en' | translate}}</button>
-    <button (click)="changeLang('es')">{{'languages.es' | translate}}</button>
-    <p-table [value]="documents"  selectionMode="multiple"
-    dataKey="id" [rows]="20" styleClass="p-datatable-striped" sortMode="multiple">
-        <ng-template pTemplate="header">
-            <tr>
-                <th></th>
-                <th></th>
-                <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
-                <th>Etiqueta</th>
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th>Id</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-document let-i="rowIndex">
-            <tr [pSelectableRow]="document" [pSelectableRowIndex]="i">
-                <td>
-                    <p-tableCheckbox [value]="document" />
-                </td>
-                <td>
-                    <p-button type="button" pRipple [pRowToggler]="document" [text]="true" [rounded]="true" [plain]="true"  />
-                </td>
-                <td>{{ document.name }}</td>
-                <td>{{ document.label }}</td>
-                <td>{{ document.status }}</td>
-                <td>{{ document.createdAt }}</td>
-                <td>{{ document.favourite }}</td>
-                <td></td>
-            </tr>
-        </ng-template>
-    </p-table>
+<p-toolbar>
+    <div class="p-toolbar-group-start">
+        <span class="font-bold">
+            {{"header.title" | translate}}
+        </span>
+    </div>
+    <div class="p-toolbar-group-end">
+        <div class="mr-1">
+            <span>{{'header.permissions' | translate}}</span>
+        </div>
+
+        <div class="mr-1">
+            <p-inputSwitch [(ngModel)]="checked" (onChange)="changePermissions()" />
+        </div>
+        
+        <div>
+            <p-dropdown 
+                [options]="languages" 
+                optionLabel="name"
+                [filter]="true"
+                appendTo="body"
+                [(ngModel)]="selectedLanguage"
+                filterBy="name"
+                (onChange)="changeLang($event)"
+                [showClear]="true"
+                placeholder="Select a language" />
+                <ng-template pTemplate="selectedItem" let-selectedOption>
+                    <div class="flex align-items-center gap-2">
+                        <div>{{ selectedOption.name }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-language pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                        <div>{{ language.name }}</div>
+                    </div>
+                </ng-template>
+        </div>  
+    </div>
+</p-toolbar>
+<div class="d-inline-flex">
+    <div class="card flex justify-content-center adjust-tabmenu">
+        <p-panelMenu [model]="items" styleClass="w-full md:w-20rem" />
+    </div>
+    <div class="adjust-table-right" *ngIf="documents">
+        <p-table #documentsTable [value]="documents"  selectionMode="multiple"
+        dataKey="id" [rows]="20" styleClass="p-datatable-striped" sortMode="multiple" 
+        [expandedRowKeys]="expandedRows" [globalFilterFields]="['name', 'label', 'status', 'createdAt', 'id']"
+        [scrollable]="true" scrollHeight="400px" [tableStyle]="{'min-width': '50rem'}"
+        [(selection)]="selectedDocuments" [paginator]="true"
+        [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
+            <ng-template pTemplate="caption">
+                <div class="adjust-table-header-flex">
+                    <div >
+                        <p-button size="small" icon="pi pi-arrow-left" />
+                        <i class="pi pi-folder m-1"></i>
+                        <span>Expedientes Material</span>
+                    </div>
+                    <div>
+                        <p-iconField class="mr-1" iconPosition="left" class="ml-auto">
+                            <p-inputIcon>
+                                <i class="pi pi-search"></i>
+                            </p-inputIcon>
+                            <input 
+                                pInputText 
+                                type="text" 
+                                (input)="documentsTable.filterGlobal($any($event.target).value, 'contains')" 
+                                placeholder="Buscar por nombre" />
+                        </p-iconField>
+                        <p-button size="small" icon="pi pi-sliders-h" />
+                    </div>
+                    
+                </div>
+                <div class="adjust-table-header-flex">
+                    <div class="pt-1">
+                        <span>Contiene {{documents.length}} documentos</span>
+                    </div>
+                    <div>
+                        <p-button *ngIf="selectedDocuments.length > 0" label="Delete" icon="pi pi-trash" text (onClick)="deleteDocuments()" />
+                    </div>
+                    <div>
+                        <p-button label="Expand All" icon="pi pi-plus" text (onClick)="expandAll()" />
+                        <p-button label="Collapse All" icon="pi pi-minus" text (onClick)="collapseAll()" />
+                    </div>
+                    
+                    
+                </div>
+            </ng-template>    
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th pSortableColumn="name">{{"tableHeader.name" | translate}} <p-sortIcon field="name" /></th>
+                    <th pSortableColumn="label">{{"tableHeader.label" | translate}} <p-sortIcon field="label" /></th>
+                    <th pSortableColumn="status">{{"tableHeader.status" | translate}} <p-sortIcon field="status" /></th>
+                    <th pSortableColumn="createdAt">{{"tableHeader.createdAt" | translate}} <p-sortIcon field="createdAt" /></th>
+                    <th pSortableColumn="id">{{"tableHeader.id" | translate}} <p-sortIcon field="id" /></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-document let-i="rowIndex" let-expanded="expanded">
+                <tr [pSelectableRow]="document" [pSelectableRowIndex]="i">
+                    <td>
+                        <p-tableCheckbox [value]="document" />
+                    </td>
+                    <td>
+                        <p-button type="button" pRipple [pRowToggler]="document" [text]="true" [rounded]="true" [plain]="true"  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"/>
+                    </td>
+                    <td><i class="pi pi-file-pdf" style="color: red"></i></td>
+                    <td>{{ document.name }}</td>
+                    <td>{{ document.label }}</td>
+                    <td>{{ document.status }} <p-button *ngIf="document.status === 'Pending'" icon="pi pi-info-circle" (click)="putDocument(document, 'validation')"></p-button></td>
+                    <td>{{ document.createdAt }}</td>
+                    <td>{{ document.id }}</td>
+                    <td>
+                        <i *ngIf="document.favourite" class="pi pi-star" (click)="putDocument(document, 'favourite')"></i>
+                        <i *ngIf="!document.favourite" class="pi pi-star-fill" (click)="putDocument(document, 'favourite')"></i>
+                    </td>
+                    <td>
+                        <i class="pi pi-ellipsis-v"></i>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-document>
+                <tr>
+                    <td colspan="2">
+                        <i class="pi pi-file-pdf adjust-icon"></i>
+                    </td>
+                    <td colspan="8">
+                        <div class="p-3">
+                            <p-table [value]="document.details" dataKey="idDetail">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="adjust-th">{{'documentDetails.description' | translate}}</th>
+                                        <th class="adjust-th">{{'documentDetails.template' | translate}}</th>
+                                        <th class="adjust-th">{{'documentDetails.constraints' | translate}}</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-detail>
+                                    <tr>
+                                        <td>{{ detail.description }}</td>
+                                        <td>{{ detail.template }}</td>
+                                        <td>{{ detail.constraints }}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <p-table [value]="document.details" dataKey="idDetail">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="adjust-th">{{'documentDetails.evaluation' | translate}} </th>
+                                        <th class="adjust-th">{{'documentDetails.createdAt' | translate}} </th>
+                                        <th class="adjust-th">{{'documentDetails.labels' | translate}} </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-detail>
+                                    <tr>
+                                        <td>{{ detail.evaluation }}</td>
+                                        <td>{{ detail.createdAt }}</td>
+                                        <td>{{ detail.labels }}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="6">There are no info for this document yet.</td>
+                                </tr>
+                            </ng-template>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 </div>

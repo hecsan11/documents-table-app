@@ -1,104 +1,244 @@
 {
-    "documents": [
-      {
-        "id": 1,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 2,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 3,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 4,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 5,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "Pending",
-        "favourite": "false"
-      },
-      {
-        "id": 6,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 7,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Pending",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 8,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 9,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 10,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Completed",
-        "createdAt": "monday",
-        "favourite": "false"
-      },
-      {
-        "id": 11,
-        "name": "Do task",
-        "description": "Esto es una ejemplo de prueba",
-        "label": "'99'",
-        "status": "Pending",
-        "createdAt": "monday",
-        "favourite": "false"
-      }
-      
-    ]
-  }
+  "documents": [
+    {
+      "id": "1",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 3,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 3,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 3,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 3,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 4,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Pending",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 5,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 6,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 7,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Completed",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": "false",
+      "details": [
+        {
+          "idDetail": 8,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Pending",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": false,
+      "details": [
+        {
+          "idDetail": 9,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Pending",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": false,
+      "details": [
+        {
+          "idDetail": 10,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "Do task",
+      "description": "Esto es una ejemplo de prueba",
+      "label": "'99'",
+      "status": "Pending",
+      "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+      "favourite": true,
+      "details": [
+        {
+          "idDetail": 11,
+          "description": "Esto es una ejemplo de prueba",
+          "template": "Detalle de la plantilla",
+          "constraints": "3 restricciones",
+          "evaluation": "Evaluación",
+          "createdAt": "Mon, 30 Sep 2024 23:06:23 GMT",
+          "labels": "Etiquetas varias"
+        }
+      ]
+    }
+  ]
+}

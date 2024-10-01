@@ -1,37 +1,76 @@
 import { Component, OnInit } from '@angular/core';
 import { Document } from '../../core/models/app.models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { ToolbarModule } from 'primeng/toolbar';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { CommonModule } from '@angular/common';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableModule, TranslateModule, ButtonModule],
+  imports: [TableModule, TranslateModule, ButtonModule, ToolbarModule, InputSwitchModule,
+    InputIconModule,InputTextModule,IconFieldModule, CommonModule, DropdownModule, FormsModule,
+    PanelMenuModule
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 export class TableComponent implements OnInit {
-  documents: Array<Document> = [];
+  documents: Array<any> = [];
   completedDocuments: Array<Document> = [];
   pendingDocuments: Array<Document> = [];
+
+  checked: boolean = false;
   
   gateway: string = 'http://localhost:3000';
   endpointDocuments: string = '/documents';
   url: string = '';
 
-  remainingItems: number = 0;
+  expandedRows: any = {};
 
-  documentForm!: FormGroup;
+  selectedDocuments: Array<Document> = [];
+  selectedLanguage: string | undefined;
+  languages: Array<Object> = [];
 
-  selected: Array<Document> = [];
+  items: MenuItem[] = [
+    {
+        label: 'Bandeja de entrada',
+        icon: 'pi pi-file',
+        items: [
+            {
+                label: 'Documentos',
+                icon: 'pi pi-file',
+            },
+        ]
+    },
+    {
+        label: 'Contenido de ...',
+        icon: 'pi pi-folder',
+        items: [
+            {
+                label: 'Expedientes Personal',
+                icon: 'pi pi-folder'
+            },
+            {
+                label: 'Expedientes Material',
+                icon: 'pi pi-cloud-download'
+            }
+        ]
+    }]
 
   constructor( private readonly httpClient: HttpClient,
-    private formBuilder: FormBuilder, 
     private translate: TranslateService) {
       translate.addLangs(['es', 'en']);
       translate.setDefaultLang('es');
@@ -40,110 +79,82 @@ export class TableComponent implements OnInit {
   ngOnInit():void {
     this.url= this.gateway + this.endpointDocuments;
     this.getDocuments();
-    this.documentForm = this.formBuilder.group({
-      description: [null, Validators.required],
-      status: ['Pending', Validators.required]
-    })
+    this.languages = [{code:'es', name: this.translate.instant('languages.es')},{code:'en', name: this.translate.instant('languages.en')}]
   }
 
-  changeLang(lang: string) {
-    this.translate.use(lang);
+  changeLang(event: any) {
+    this.translate.use(event.value.code);
+  }
+
+  changePermissions() {
+    this.getDocuments();
+  }
+
+  expandAll() {
+    this.expandedRows = this.documents.reduce((acc, p) => (acc[p.id] = true) && acc, {});
+  }
+
+  collapseAll() {
+    this.expandedRows = {};
   }
 
   getDocuments(): void {
     this.httpClient.get<Array<Document>>(this.url).subscribe((resp: any) => {
-      this.documents = resp;
-      this.checkDocuments();
+      this.documents = this.evaluateDocuments(resp);
     },(err: any) => {
       alert('Error retrieving data: ' + err.message);
     });
   }
 
-  postDocument(): void {
-    const body: Document = {
-      description: this.documentForm.controls['description'].value,
-      status: this.documentForm.controls['status'].value,
-      id: Math.random()
-    }
-    const status = this.documentForm.controls['status'].value;
-    this.httpClient.post(this.url, body).subscribe((resp: any) => {
-      alert('Task added');
-      this.documents.push(body);
-      this.checkDocuments();
-      this.documentForm.patchValue({
-        description: null,
-        status: 'Pending'
-      });
-    },(err: any) => {
-      alert('Error adding task: ' + err.message)
-    }
-    );
-  }
-
-  putTask(): void {
+  putDocument(document: Document, parameter: string): void {
     let index: number;
     let indexResp: number;
     let status: string;
     
-    if (this.selected.length > 0) {
-      for (var task of this.selected){
-        index = this.documents.indexOf(task);
-        status = task.status;
-        if (status === 'Pending') {
-          status = 'Completed';
-        } else {
-          status = 'Pending';
-        }
-        this.httpClient.put(this.url + '/' + this.documents[index].id, {id: this.documents[index].id, description: this.documents[index].description,
-          status: status}).subscribe((resp: any) => {
-          alert('Document modified');
-          indexResp = this.documents.findIndex((element) => element.id === resp.id);
-          this.documents[indexResp]['status'] = resp.status;
-          this.checkDocuments();
-        },(err: any) => {
-          alert('Error modifying task: ' + err.message);
-        })
-      }
+    index = this.documents.indexOf(document);
+    if (parameter === 'validation'){
+      document.status = 'Completed';
     } else {
-      alert('Select documents to edit');
+      document.favourite = !document.favourite;
     }
     
+    this.httpClient.put(this.url + '/' + this.documents[index].id, document).subscribe((resp: any) => {
+      indexResp = this.documents.findIndex((element) => element.id === resp.id);
+      if (parameter === 'validation') {
+        this.documents[indexResp]['status'] = resp.status;
+      } else {
+        this.documents[indexResp]['favourite'] = resp.favourite;
+      }
+     
+      this.getDocuments();
+    },(err: any) => {
+      alert('Error modifying document: ' + err.message);
+    }) 
   }
 
-  deleteTask(): void {
+  deleteDocuments(): void {
     let index: number
 
-    if (this.selected.length > 0 && this.selected.length < 2){
-      for (var task of this.selected){
+    if (this.selectedDocuments.length > 0){
+      for (var task of this.selectedDocuments){
         index = this.documents.indexOf(task);
-        // TODO: use an array of promises to resolve each promise and know the specific index when
-        // resp is ok, so we can delete the task from the UI's table. If we delete more than 2 tasks
-        // they will be deleted correctly in DB but the UI won´t show the correct ouput until user refreshes page
         this.httpClient.delete(this.url + '/' + this.documents[index].id).subscribe((resp: any) => {
-          alert('Task deleted');
           this.documents.splice(index,1);
         },(err: any) => {
-          alert('Error deleting task: ' + err.message);
+          alert('Error deleting document: ' + err.message);
         })
       }
-    } else {
-      this.selected.length === 0 ? alert('Select one task to delete') : alert('Select no more than 1 task to delete');
     }
   }
 
-  evaluateTasks(tasks: Array<Document>): Array<Document> {
-    this.pendingDocuments = tasks.filter( (task: any) => {
-      return task.status === 'Pending'
+  evaluateDocuments(documents: Array<Document>): Array<Document> {
+    this.pendingDocuments = documents.filter( (document: any) => {
+      return document.status === 'Pending'
     })
-    this.completedDocuments = tasks.filter( (task: any) => {
-      return task.status === 'Completed'
+    this.completedDocuments = documents.filter( (document: any) => {
+      return document.status === 'Completed'
     })
-    return this.pendingDocuments.concat(this.completedDocuments);
-  }
-
-  checkDocuments(): void {
-    this.documents = this.evaluateTasks(this.documents);
-    this.remainingItems = this.pendingDocuments.length;
+    return this.checked ? this.pendingDocuments.concat(this.completedDocuments) : this.pendingDocuments;
   }
 
 }

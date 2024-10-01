@@ -1,6 +1,25 @@
 {
+    "header": {
+        "title": "Prueba front-end developer",
+        "permissions": "Habilitar permisos de visualización"
+    },
     "languages": {
       "es": "Español",
       "en": "Inglés"
+    },
+    "tableHeader": {
+        "name": "Nombre",
+        "label": "Etiqueta",
+        "status": "Estado",
+        "createdAt": "Fecha",
+        "id": "Id"
+    },
+    "documentDetails": {
+        "description": "Nombre del documento",
+        "template": "Plantilla",
+        "constraints": "Restricciones del documento",
+        "evaluation": "Evaluación de la fuente",
+        "createdAt": "Fecha de creación",
+        "labels": "Etiquetas varias"
     }
 }
